@@ -190,8 +190,8 @@ class StartGame : public Command {
           } else if (answer == "h") {
             HealPlayer* healPlayer = new HealPlayer(&player, 1 + rand() % 2);
             invoker.executeCommand(healPlayer);
-            std::cout << "Your health now: " << player.getHealth() << '\n';
-          } else if (answer == "e") {
+	    delete healPlayer;
+	  } else if (answer == "e") {
             break;
           }
         }

@@ -1,3 +1,8 @@
+/*
+ * 	this is
+ * 	BUILDERMOB.h
+ */
+
 #pragma once
 
 #include <vector>
@@ -10,7 +15,7 @@
 class Builder {
 public:
 	virtual ~Builder() {}
-	virtual void reset() const = 0;
+	// virtual void reset() const = 0;
 	virtual void setHealth() const = 0;
 	virtual void setInventory() const = 0;
 	virtual void setArmor() const = 0;
@@ -38,19 +43,21 @@ public:
 
 	// building methods
 	void setHealth() const override {
-		mob->healthValue = 25;
+		mob->healthValue = 21 + rand() % 10;
 	}
 	void setInventory() const override {
-		mob->inventory = 0;
+		mob->mobName = "Beast";
+		mob->inventory = rand() % 11;
 	}
 	void setArmor() const override {
-		mob->armor = 5;
+		mob->armor = 4 + rand() % 2;
 	}
 	void setWeapon() const override {
-		mob->weapon = Weapon("claw", 12);
+		int damage = 3 + rand() % 5;
+		mob->weapon = Weapon("claw", damage);
 	}
 
-	// ger product
+	// get product
 	Mob* getProduct() {
 		Mob* result = mob;
 		reset();
@@ -72,5 +79,10 @@ public:
 		builder->setArmor();
 		builder->setWeapon();
 	}
+	/*
+	Mob* getMob() {
+		return builder->getProduct();
+	}
+	*/
 };
 

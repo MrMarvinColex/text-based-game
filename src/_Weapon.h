@@ -1,3 +1,8 @@
+/*
+ * 	this is 
+ * 	_WEAPONS.H
+ */
+
 #pragma once
 
 #include <string>
@@ -10,4 +15,11 @@ public:
 public:
 	std::string name;
 	int damage;
+
+	int getDamage() {
+		return damage;
+	}
+	std::string getName() {
+		return name;
+	}
 };

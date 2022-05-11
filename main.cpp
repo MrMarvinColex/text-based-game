@@ -1,9 +1,14 @@
+/*
+ *	this is
+ *	MAIN.CPP
+ */
+
 #include "main.h"
 
 int main() {
 	Invoker invoker;
-	Greeting* greetingCommand = new Greeting("First launch! Hi, I'm alive!\n");
-	invoker.setCommand(greetingCommand);
+	StartGame* startGame = new StartGame();
 
-	invoker.executeRemainings();
+	invoker.executeCommand(startGame);
+	return 0;
 }

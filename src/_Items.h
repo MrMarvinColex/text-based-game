@@ -1,3 +1,8 @@
+/*
+ * 	this is
+ * 	_ITEM.H
+ */
+
 #pragma once
 
 #include <string>
@@ -8,7 +13,14 @@ public:
 	monetaryUnit() = default;
 	monetaryUnit (std::string name, int nominal) : nameOfCurrency(name), nominal(nominal) {}
 
-public:
+	std::string getName() {
+                return nameOfCurrency;
+        }
+        int getNominal() {
+                return nominal;
+        }
+
+private:
         std::string nameOfCurrency;
         int nominal;
 };
@@ -20,11 +32,18 @@ public:
 		if (!num)
 			money = {};
 		else {
-			money = {monetaryUnit("gold", num)};
+			money = {{monetaryUnit("gold", 1), num}};
 		}
 	}
 
-public:
-        std::vector<monetaryUnit> money;
+	std::pair<std::string, int> getMoney() {
+                return {money[0].first.getName(), money[0].first.getNominal() * money[0].second};
+        }
+        void decreaseMoney(int cost) {
+                money[0].second -= cost;
+        }
+
+private:
+        std::vector<std::pair<monetaryUnit, int>> money;
 };
 

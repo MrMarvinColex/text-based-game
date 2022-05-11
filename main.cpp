@@ -6,11 +6,11 @@
 #include "main.h"
 
 int main() {
-	Invoker invoker;
-	StartGame* startGame = new StartGame();
+  Invoker invoker;
+  StartGame* startGame = new StartGame();
 
-	invoker.executeCommand(startGame);
-	
-	delete startGame;
-	return 0;
+  invoker.executeCommand(startGame);
+
+  delete startGame;
+  return 0;
 }

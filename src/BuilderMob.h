@@ -46,7 +46,7 @@ class Beast : public Builder {
   }
   void setInventory() const override {
     mob->mobName = "Beast";
-    mob->inventory = 1 + rand() % 11;
+    mob->inventory = 10 + rand() % 15;
   }
   void setArmor() const override {
     mob->armor = 4 + rand() % 2;

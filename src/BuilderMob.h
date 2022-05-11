@@ -47,7 +47,7 @@ public:
 	}
 	void setInventory() const override {
 		mob->mobName = "Beast";
-		mob->inventory = rand() % 11;
+		mob->inventory = 1 + rand() % 11;
 	}
 	void setArmor() const override {
 		mob->armor = 4 + rand() % 2;
@@ -79,10 +79,5 @@ public:
 		builder->setArmor();
 		builder->setWeapon();
 	}
-	/*
-	Mob* getMob() {
-		return builder->getProduct();
-	}
-	*/
 };
 

@@ -27,8 +27,7 @@ private:
 
 class Wallet {
 public:
-	Wallet() = default;
-	Wallet (int num) : money() {
+	Wallet (int num = 0) : money() {
 		if (!num)
 			money = {};
 		else {

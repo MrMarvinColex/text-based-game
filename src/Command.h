@@ -13,35 +13,6 @@
 #include "BuilderMob.h"
 #include "_Creature.h"
 
-/*
-class Invoker {
-private:
-//      вектор в разработке, смысл его существования написан чуть ниже
-//      std::vector<bool> commands;
-        std::queue<Command*> queueOfCommands;
-public:
-        Invoker() = default;
-        void setCommand(Command* command) {
-                queueOfCommands.push(command);
-//              здесь может быть проверка для команд, исполняющихся только один раз
-//              пример: выход из игры нужно сделать только один раз
-//              commands[hash(commands)] = something;
-        }
-        void executeCommand(Command* command) {
-                command->execute();
-        }
-        void makeFitings() {
-//              for (auto fittingCommand : queue)
-//                      fitingCommand.execute();
-        }
-        void executeRemainings() {
-                while(!queueOfCommands.empty()) {
-                        queueOfCommands.front()->execute();
-                        queueOfCommands.pop();
-                }
-        }
-};
-*/
 
 class Command {
 public:
@@ -59,47 +30,6 @@ private:
 	std::string greeting = "Welcome in AmazingCave, stranger!\n";
 };
 
-/*
-class StartGame : public Command {
-private:
-	Invoker invoker;
-public:
-	StartGame(Invoker& invoker) : invoker(invoker) {}
-	void execute() const override {
-		Greeting* greetingCommand = new Greeting("I found yourself in this cold and wet cave. \nSo, do you remember your name? ... \nenter the name: ");
-	        invoker.executeCommand(greetingCommand);
-
-	        std::string name;
-        	std::cin >> name;
-	        Player player(100, 0, 0, name, 20 + rand() % 20, 0, "Common Knife", 5 + rand() % 3);
-
-	        PrintInventory* printInventory = new PrintInventory(&player);
-
-	        while (true) {
-    			std::cout << "\n\nWhat you wanna do?\n i: Print inventory\n h: Heal\n f: Go to fight\n e: Exit (not recommended)\n"
-			std::string answer;
-			std::cin >> answer;
-				
-			if (answer == "e") {
-				std::cout << "\n\nAre you sure?\n(y / n): ";
-				std::string sure;
-				std::cin >> sure;
-				if (sure == "y")
-					break;
-			} else if (answer == "i") {
-				invoker.executeCommand(PrintInventory);
-			} else if (answer == "h") {
-				HealPlayer* healPlayer = new HealPlayer(&player, 0);
-				invoker.executeCommand(healPlayer);
-			} else if (answer == "f") {
-
-			} else {
-				std::cout << "\n\nSorry, I can't understand you, try again.\n"
-			}
-        	}
-	}
-};
-*/
 
 class PrintInventory : public Command {
 private:
@@ -191,10 +121,7 @@ public:
 
 
 class StartGame : public Command {
-private:
-        // Invoker invoker;
 public:
-        //StartGame(Invoker invoker) : invoker(invoker) {}
         StartGame() = default;
 	void execute() const override {
 		Invoker invoker;
@@ -204,12 +131,17 @@ public:
                 std::string name;
                 std::cin >> name;
                 Player player(100, 0, 0, name, 20 + rand() % 20, 0, "Common Knife", 5 + rand() % 3);
+		int winNumber = 5 + rand() % 11;
 
                 PrintInventory* printInventory = new PrintInventory(&player);
 
                 while (true) {
 			if (player.getHealth() <= 0) {
 				std::cout << "Ohhh, your adventure is ended ...\n";
+				break;
+			}
+			if (player.getKillCounter() >= winNumber) {
+				std::cout << "\n\nOh, you see the light in the end og tunnel!\nYou are saved!\n";
 				break;
 			}
 
@@ -236,7 +168,10 @@ public:
 				director.buildMob();
 				Mob* mob = beastBuilder->getProduct();
 
-				while (player.getHealth() > 0 && mob->getHealth() > 0) {
+				std::cout << "\n\n" << mob->getName() << " block your way. He has " << mob->getHealth() << " HP and " << mob->getWeapon().second
+					  << " damage with his " << mob->getWeapon().first << ".\n";
+
+				while (player.getHealth() > 0) {
 					if (mob->getHealth() <= 0) {
 						std::cout << "\n\nCongratulation, " << mob->getName() << " was killed, you get " << mob->getInventory().second << " gold.\n";
 						player.decreaseMoney(-mob->getInventory().second);
@@ -249,14 +184,22 @@ public:
 					std::cin >> answer;
 
 					if (answer == "a") {
+						/*
 						std::cout << "\n\nYou damage " << mob->getName() << " with your " << player.getWeapon().first << " on " 
 							  << player.getWeapon().second << " damage.\n";
-						std::cout << mob->getName() << " have " << meb->getHealth() << " HP\n"; 
+						std::cout << mob->getName() << " have " << mob->getHealth() << " HP\n"; 
 						std::cout << "You were damaged on " << mob->getWeapon().second << " with " << mob->getWeapon().first << ".\n";
 						std::cout << "Your health now: " << player.getHealth();
-						
+						*/
+
 						mob->decreaseHealth(player.getWeapon().second);
 						player.decreaseHealth(mob->getWeapon().second);
+
+						std::cout << "\n\nYou damage " << mob->getName() << " with your " << player.getWeapon().first << " on "
+                                                          << player.getWeapon().second << " damage.\n";
+                                                std::cout << mob->getName() << " have " << std::max(0, mob->getHealth()) << " HP\n";
+                                                std::cout << "You were damaged on " << mob->getWeapon().second << " with " << mob->getWeapon().first << ".\n";
+                                                std::cout << "Your health now: " << std::max(0, player.getHealth());
 					} else if (answer == "h") {
 						HealPlayer* healPlayer = new HealPlayer(&player, 1 + rand() % 2);
                                 		invoker.executeCommand(healPlayer);

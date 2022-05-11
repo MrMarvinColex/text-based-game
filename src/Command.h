@@ -160,6 +160,7 @@ public:
                         } else if (answer == "h") {
                                 HealPlayer* healPlayer = new HealPlayer(&player, 0);
                                 invoker.executeCommand(healPlayer);
+				delete healPlayer;
                         } else if (answer == "f") {
 				Director director;
 				Beast* beastBuilder = new Beast();
@@ -184,14 +185,6 @@ public:
 					std::cin >> answer;
 
 					if (answer == "a") {
-						/*
-						std::cout << "\n\nYou damage " << mob->getName() << " with your " << player.getWeapon().first << " on " 
-							  << player.getWeapon().second << " damage.\n";
-						std::cout << mob->getName() << " have " << mob->getHealth() << " HP\n"; 
-						std::cout << "You were damaged on " << mob->getWeapon().second << " with " << mob->getWeapon().first << ".\n";
-						std::cout << "Your health now: " << player.getHealth();
-						*/
-
 						mob->decreaseHealth(player.getWeapon().second);
 						player.decreaseHealth(mob->getWeapon().second);
 
@@ -199,15 +192,17 @@ public:
                                                           << player.getWeapon().second << " damage.\n";
                                                 std::cout << mob->getName() << " have " << std::max(0, mob->getHealth()) << " HP\n";
                                                 std::cout << "You were damaged on " << mob->getWeapon().second << " with " << mob->getWeapon().first << ".\n";
-                                                std::cout << "Your health now: " << std::max(0, player.getHealth());
+                                                std::cout << "Your health now: " << std::max(0, player.getHealth()) << '\n';
 					} else if (answer == "h") {
 						HealPlayer* healPlayer = new HealPlayer(&player, 1 + rand() % 2);
                                 		invoker.executeCommand(healPlayer);
-						std::cout << "Your health now: " << player.getHealth();
+						std::cout << "Your health now: " << player.getHealth() << '\n';
 					} else if (answer == "e") {
 						break;
 					}
 				}
+				delete beastBuilder;
+				delete mob;
                         } else {
                                 std::cout << "\n\nSorry, I can't understand you, try again.\n";
                         }

@@ -10,5 +10,7 @@ int main() {
 	StartGame* startGame = new StartGame();
 
 	invoker.executeCommand(startGame);
+	
+	delete startGame;
 	return 0;
 }

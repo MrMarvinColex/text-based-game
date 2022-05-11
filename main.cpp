@@ -6,6 +6,7 @@
 #include "main.h"
 
 int main() {
+  srand(time(NULL));
   Invoker invoker;
   StartGame* startGame = new StartGame();
 

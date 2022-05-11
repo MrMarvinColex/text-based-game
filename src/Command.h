@@ -36,9 +36,6 @@ class PrintInventory : public Command {
   Player* player;
  public:
   PrintInventory(Player* player) : player(player) {}
-  ~PrintInventory() {
-    delete player;
-  }
   void execute() const override {
     std::cout << "\n\n" << player->getName() << ",\n";
     std::cout << "Your health now: " << player->getHealth() << '\n';
@@ -54,9 +51,6 @@ class HealPlayer : public Command {
   int debuff;
  public:
   HealPlayer(Player* player, int debuff) : player(player), debuff(debuff) {}
-  ~HealPlayer() {
-    delete player;
-  }
   void execute() const override {
     int cost = 4 + rand() % 4 + debuff * (rand() % 2);
     int healPoints = 3 + rand() % 4 - debuff;
@@ -207,5 +201,7 @@ class StartGame : public Command {
         std::cout << "\n\nSorry, I can't understand you, try again.\n";
       }
     }
+    delete greetingCommand;
+    delete printInventory;
   }
 };

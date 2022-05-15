@@ -148,7 +148,7 @@ class StartGame : public Command {
   }
   void execute() const override {
 
-    TgBot::Bot bot("5333812218:AAH7vY6iKTXQms8uu7Ony_SYI0j3Hv66H2I");
+    TgBot::Bot bot("5333812218:AAH7vY6iKTXQms8uu7Ony_*************");
     bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
       bot.getApi().sendMessage(797384873, "Your message is: " + message->text);
       std::ofstream out("./info.txt");

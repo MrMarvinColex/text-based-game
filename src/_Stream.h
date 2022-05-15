@@ -40,10 +40,10 @@ class ConsoleStream : public Stream {
  *	but for me it was unsuccessfully, very sad.
  */
 
-TgBot::Bot bot("5333812218:AAH7vY6iKTXQms8uu7Ony_SYI0j3Hv66H2I");
+TgBot::Bot bot("5333812218:AAH7vY6iKTXQms8uu7Ony_*************");
 class TelegrammStream : public Stream {
  private:
-  //TgBot::Bot bot("5333812218:AAH7vY6iKTXQms8uu7Ony_SYI0j3Hv66H2I"); 
+  //TgBot::Bot bot("5333812218:AAH7vY6iKTXQms8uu7Ony_*************"); 
   //static int chatID = 797384873;
  public:
   TelegrammStream() = default;
